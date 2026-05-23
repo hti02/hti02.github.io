@@ -33,42 +33,4 @@ export const PROJECTS_DATA = {
     period: "January 2025 – Present",
     hero: "/images/aub-lab.jpg",
     heroStyle: { objectFit: "cover" },
-    summary: "As part of AUB's Vertically Integrated Projects Program (VIPP), this research project aims to develop an autonomous UAV system capable of detecting and suppressing wildfires in Lebanese terrain — where traditional firefighting infrastructure is limited and fires spread rapidly.",
-    challenge: "Lebanon's geography — steep slopes, variable winds, and diverse vegetation — makes wildfire modeling exceptionally difficult. Existing simulation tools like FlamMap and MTT were designed for North American terrain and fuel conditions, requiring significant adaptation for local use.",
-    approach: "My contribution focused on reviewing and critically analyzing existing fire propagation methodologies. I assessed how FlamMap/MTT models handle wind patterns, topographic slope effects, and fuel moisture content, then identified the key parameters that need recalibration for Lebanese conditions. I also contributed to hardware sourcing for the UAV frame and component selection.",
-    results: [
-      "Comprehensive review of FlamMap/MTT methodologies",
-      "Identified key terrain and fuel parameters for Lebanon",
-      "Hardware sourcing for UAV structural components",
-      "Ongoing contribution to simulation calibration",
-    ],
-    tools: ["FlamMap / MTT", "Wildfire Modeling", "UAV Design", "Terrain Analysis", "Hardware Sourcing"],
-    images: [
-      { src: "/images/aub-lab.jpg", caption: "AUB Engineering Lab — project workspace", style: { objectFit: "cover" } },
-    ],
-  },
-  hvac: {
-    id: "hvac",
-    title: "HVAC Optimisation",
-    subtitle: "AUB Architecture Building · Chimney Effect",
-    tag: "Team Lead · 7-Person Team · SSEA AUB",
-    period: "September 2024 – January 2025",
-    hero: "/images/hvac-summary.jpg",
-    heroStyle: { objectFit: "cover" },
-    summary: "Led a 7-person engineering team to diagnose and resolve a significant thermal comfort problem in the AUB Architecture and Design (ARD) building. The upper zone recorded temperatures 10°C higher than the lower zone — making the space unusable during peak hours.",
-    challenge: "The ARD building's skylights, when closed, created a sealed upper zone (Zone B) that trapped hot air rising via the chimney effect. Zone B averaged 35°C while Zone A was maintained at 25°C — a 10°C differential causing HVAC overload and occupant discomfort across 480m³ of space.",
-    approach: "After collecting temperature data via BMS-connected sensors, we identified that opening the skylights horizontally during peak heat periods was the most effective solution. We designed an Arduino-based automated control system that monitors indoor-outdoor thermal differentials and actuates the skylight motors accordingly — no manual intervention required.",
-    results: [
-      "Diagnosed 10°C thermal differential across 480m³",
-      "Designed Arduino automated skylight control system",
-      "BMS integration for real-time temperature monitoring",
-      "Proposed solution targeting full elimination of Zone B overheating",
-    ],
-    tools: ["Arduino", "Thermal Analysis", "BMS Integration", "Airflow Modeling", "Temperature Sensors"],
-    images: [
-      { src: "/images/hvac-summary.jpg", caption: "Executive Summary", style: { objectFit: "cover" } },
-      { src: "/images/hvac-study.jpg", caption: "Thermal zoning study — Zone A vs Zone B", style: { objectFit: "cover" } },
-      { src: "/images/hvac-solution.jpg", caption: "Proposed skylight solution design", style: { objectFit: "cover" } },
-    ],
-  },
-};
+    summary: "As part of AUB's Vertically Integrated Projects Program (VIPP), this research project aims to develop an autonomous UAV system capable of detecting and suppressing wildfires in Lebanese terra
