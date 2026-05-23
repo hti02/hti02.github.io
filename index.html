@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hussein Itani</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:#000;-webkit-font-smoothing:antialiased;font-family:'Inter',sans-serif;}
+    .rv{opacity:0;transform:translateY(24px);transition:opacity 0.75s ease,transform 0.75s ease;}
+    .rv.in{opacity:1;transform:translateY(0);}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+    @keyframes expandIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+    .proj-expand{animation:expandIn 0.35s ease forwards;}
+    @media(max-width:768px){.proj-grid{grid-template-columns:1fr!important;}.nav-links{display:none!important;}}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const A="#CBACF9",BG="#000",CB="#10101A",BR="rgba(255,255,255,0.1)";
+
+    function useReveal(){
+      React.useEffect(()=>{
+        const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add("in")}),{threshold:0.08});
+        document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+        return()=>io.disconnect();
+      },[]);
+    }
+
+    function GridBg({o=0.04}){
+      return <div style={{position:"absolute",inset:0,pointerEvents:"none",backgroundImage:`linear-gradient(rgba(255,255,255,${o}) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,${o}) 1px,transparent 1px)`,backgroundSize:"40px 40px"}}/>;
+    }
+
+    function go(id){document.getElementById(id)?.scrollIntoView({behavior:"smooth"});}
+
+    function Navbar(){
+      return (
+        <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:999,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 5%",height:64,background:"rgba(0,0,0,0.85)",backdropFilter:"blur(12px)",borderBottom:`1px solid ${BR}`}}>
+          <span style={{fontWeight:800,fontSize:18,color:"#fff",letterSpacing:"-0.5px"}}>
+            Hussein Itani<span style={{color:A}}>.</span>
+          </span>
+          <div style={{display:"flex",gap:32,alignItems:"center"}} className="nav-links">
+            {[["About","about"],["Projects","projects"],["Experience","experience"],["Contact","contact"]].map(([l,id])=>(
+              <button key={id} onClick={()=>go(id)} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,color:"rgba(255,255,255,0.6)",fontFamily:"Inter,sans-serif",transition:"color 0.2s"}}
+                onMouseEnter={e=>e.target.style.color="#fff"} onMouseLeave={e=>e.target.style.color="rgba(255,255,255,0.6)"}>{l}</button>
+            ))}
+          </div>
+        </nav>
+      );
+    }
+
+    function Hero(){
+      const[v,sv]=React.useState(false);
+      React.useEffect(()=>{setTimeout(()=>sv(true),60);},[]);
+      return (
+        <section id="about" style={{minHeight:"100vh",background:BG,position:"relative",display:"flex",alignItems:"center",justifyContent:"center",padding:"100px 5% 80px",overflow:"hidden"}}>
+          <GridBg/>
+          <div style={{position:"absolute",top:-100,left:-100,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(101,52,178,0.25) 0%,transparent 65%)",pointerEvents:"none"}}/>
+          <div style={{position:"absolute",bottom:-100,right:-100,width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(101,52,178,0.15) 0%,transparent 65%)",pointerEvents:"none"}}/>
+          <div style={{maxWidth:900,width:"100%",textAlign:"center",position:"relative",zIndex:2}}>
+            <div style={{display:"inline-flex",alignItems:"center",gap:8,marginBottom:28,border:`1px solid ${BR}`,borderRadius:999,padding:"6px 18px",background:"rgba(255,255,255,0.03)"}}>
+              <span style={{width:7,height:7,borderRadius:"50%",background:A,display:"inline-block",animation:"pulse 2s infinite"}}/>
+              <span style={{fontSize:13,color:"rgba(255,255,255,0.6)"}}>AUB Mechanical Engineering · Class of 2028</span>
+            </div>
+            <h1 style={{fontSize:"clamp(40px,7vw,80px)",fontWeight:800,color:"#fff",lineHeight:1.1,letterSpacing:"-2px",marginBottom:20,opacity:v?1:0,transform:v?"none":"translateY(20px)",transition:"all 1s ease"}}>
+              Engineering Machines,<br/><span style={{color:A}}>Driving Excellence.</span>
+            </h1>
+            <p style={{fontSize:18,fontWeight:300,color:"rgba(255,255,255,0.5)",lineHeight:1.75,maxWidth:560,margin:"0 auto 48px",opacity:v?1:0,transition:"all 1s ease 0.15s"}}>
+              Engineer. Entrepreneur. Builder. I turn complex problems into systems that move, scale, and last.
+            </p>
+            <div style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap",opacity:v?1:0,transition:"all 1s ease 0.25s"}}>
+              <button onClick={()=>go("projects")} style={{background:"#fff",color:"#000",border:"none",borderRadius:10,padding:"14px 32px",fontSize:14,fontWeight:600,cursor:"pointer",fontFamily:"Inter,sans-serif",transition:"background 0.2s"}}
+                onMouseEnter={e=>e.target.style.background=A} onMouseLeave={e=>e.target.style.background="#fff"}>Show my work</button>
+              <button onClick={()=>go("contact")} style={{background:"transparent",color:"#fff",border:`1px solid ${BR}`,borderRadius:10,padding:"14px 32px",fontSize:14,fontWeight:500,cursor:"pointer",fontFamily:"Inter,sans-serif",transition:"border-color 0.2s"}}
+                onMouseEnter={e=>e.currentTarget.style.borderColor=A} onMouseLeave={e=>e.currentTarget.style.borderColor=BR}>Get in touch</button>
+            </div>
+            <div style={{marginTop:64,display:"flex",justifyContent:"center",opacity:v?1:0,transition:"opacity 1.2s ease 0.4s"}}>
+              <div style={{width:140,height:140,borderRadius:"50%",border:`2px solid ${BR}`,overflow:"hidden",boxShadow:"0 0 0 6px rgba(101,52,178,0.15)"}}>
+                <img src="images/hussein.jpg" alt="Hussein Itani" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top"}} onError={e=>e.target.style.display="none"}/>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    const PROJS=[
+      {
+        t:"EnduraVolt",
+        sub:"Electric Off-Road Buggy · Regenerative Suspension",
+        d:"Co-designed a full electric off-road buggy featuring a proprietary regenerative suspension system that converts bump energy into usable electricity — recovering up to 25% of kinetic energy during operation. Validated through suspension dynamics, electromagnetic regeneration, and coil-magnet simulations in SolidWorks.",
+        points:["Up to 25% kinetic energy recovery per suspension cycle","Full 4-wheel independent suspension with regenerative struts","Complete SolidWorks assembly with FEA-validated frame","Electromagnetic simulation confirming generator output"],
+        tags:["SolidWorks","FEA","Regenerative Systems","CAD","Suspension Dynamics"],
+        imgs:["images/buggy-render1.png","images/buggy-render2.png","images/buggy-render3.png","images/buggy-top.png","images/buggy-solidworks.png"],
+        cover:false
+      },
+      {
+        t:"Autonomous Firefighting UAV",
+        sub:"Wildfire Suppression · VIPP, AUB · Dr. Bilal Kaddouh",
+        d:"Contributed to a UAV-based wildfire suppression research project under Dr. Bilal Kaddouh. Reviewed and analysed FlamMap/MTT fire propagation methodologies adapted to Lebanese terrain, fuel conditions, wind patterns, and topography.",
+        points:["Comprehensive review of FlamMap/MTT methodologies","Identified key terrain and fuel parameters for Lebanon","Hardware sourcing for UAV structural components","Ongoing contribution to simulation calibration"],
+        tags:["FlamMap/MTT","UAV Design","Fire Modeling","Terrain Analysis","Hardware Sourcing"],
+        imgs:["images/aub-lab.jpg"],
+        cover:true
+      },
+      {
+        t:"HVAC Optimisation — AUB",
+        sub:"AUB Architecture Building · Chimney Effect · 7-Person Team",
+        d:"Led a 7-person engineering team to diagnose and resolve a 10°C thermal differential in the AUB ARD building. The upper zone averaged 35°C while the lower zone was maintained at 25°C — making the space unusable during peak hours. Designed an Arduino-based automated skylight control system.",
+        points:["Diagnosed 10°C thermal differential across 480m³","Designed Arduino automated skylight control system","BMS integration for real-time temperature monitoring","Proposed solution targeting full elimination of overheating"],
+        tags:["Arduino","Thermal Analysis","BMS Integration","Airflow Modeling","Team Leadership"],
+        imgs:["images/hvac-summary.jpg","images/hvac-study.jpg","images/hvac-solution.jpg"],
+        cover:true
+      },
+      {
+        t:"Exotic Sneakers",
+        sub:"CEO & Founder · Sep 2022 – Present",
+        d:"Founded and scaled a premium sneaker retail brand from zero. Managing six-figure cash flows, a 10-person team, and full supply chain operations from import logistics to quality control and retail — built entirely from scratch at age 17.",
+        points:["Six-figure annual cash flows","10-person team with structured monthly training","Full import logistics and supply chain management","3+ years of consistent growth and operations"],
+        tags:["Operations","Supply Chain","Team Leadership","P&L","E-commerce"],
+        imgs:["images/buggy-render3.png"],
+        cover:false
+      },
+    ];
+
+    function ProjectCard({p}){
+      const[open,setOpen]=React.useState(false);
+      const[imgIdx,setImgIdx]=React.useState(0);
+      return (
+        <div className="rv" style={{background:CB,borderRadius:20,border:`1px solid ${open?A:BR}`,overflow:"hidden",transition:"border-color 0.3s,transform 0.3s,box-shadow 0.3s",boxShadow:open?`0 0 40px rgba(203,172,249,0.1)`:"none"}}
+          onMouseEnter={e=>{if(!open){e.currentTarget.style.transform="translateY(-4px)";}}}
+          onMouseLeave={e=>{if(!open){e.currentTarget.style.transform="translateY(0)";}}}
+        >
+          {/* Main image */}
+          <div style={{height:220,overflow:"hidden",position:"relative",background:"#0A0A14",cursor:"pointer"}} onClick={()=>setOpen(!open)}>
+            <img src={p.imgs[0]} alt={p.t} style={{width:"100%",height:"100%",objectFit:p.cover?"cover":"contain",display:"block",padding:p.cover?0:24,transition:"transform 0.5s"}}
+              onMouseEnter={e=>e.target.style.transform="scale(1.04)"} onMouseLeave={e=>e.target.style.transform="scale(1)"}
+              onError={e=>e.target.style.display="none"}/>
+            <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(16,16,26,0.8) 0%,transparent 50%)"}}/>
+            <div style={{position:"absolute",bottom:16,right:16,background:"rgba(0,0,0,0.6)",backdropFilter:"blur(8px)",border:`1px solid ${BR}`,borderRadius:8,padding:"6px 14px",fontSize:12,color:"rgba(255,255,255,0.7)",fontWeight:500,display:"flex",alignItems:"center",gap:6}}>
+              {open?"▲ Close":"▼ View Project"}
+            </div>
+          </div>
+
+          {/* Card body */}
+          <div style={{padding:"24px 28px"}}>
+            <h3 style={{fontSize:22,fontWeight:700,color:"#fff",marginBottom:4,letterSpacing:"-0.4px"}}>{p.t}</h3>
+            <p style={{fontSize:13,color:A,marginBottom:12,fontWeight:500}}>{p.sub}</p>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16}}>
+              {p.tags.map(t=><span key={t} style={{fontSize:12,color:A,border:"1px solid rgba(203,172,249,0.2)",borderRadius:6,padding:"4px 12px",background:"rgba(203,172,249,0.06)"}}>{t}</span>)}
+            </div>
+            <button onClick={()=>setOpen(!open)} style={{background:"none",border:"none",cursor:"pointer",fontSize:13,color:open?A:"rgba(255,255,255,0.4)",fontFamily:"Inter,sans-serif",fontWeight:600,padding:0,transition:"color 0.2s",display:"flex",alignItems:"center",gap:6}}>
+              {open?"Hide details ▲":"Show details ▼"}
+            </button>
+          </div>
+
+          {/* Expanded content */}
+          {open && (
+            <div className="proj-expand" style={{padding:"0 28px 28px",borderTop:`1px solid ${BR}`}}>
+              <p style={{fontSize:15,color:"rgba(255,255,255,0.65)",lineHeight:1.8,fontWeight:300,marginBottom:24,paddingTop:24}}>{p.d}</p>
+
+              {/* Key points */}
+              <div style={{marginBottom:24}}>
+                <p style={{fontSize:11,fontWeight:700,color:A,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}}>Key Results</p>
+                <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                  {p.points.map((pt,i)=>(
+                    <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"rgba(255,255,255,0.03)",border:`1px solid ${BR}`,borderRadius:10,padding:"12px 16px"}}>
+                      <div style={{width:6,height:6,borderRadius:"50%",background:A,flexShrink:0}}/>
+                      <span style={{fontSize:14,color:"rgba(255,255,255,0.7)"}}>{pt}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Image gallery */}
+              {p.imgs.length>1&&(
+                <div>
+                  <p style={{fontSize:11,fontWeight:700,color:A,letterSpacing:"0.12em",textTransform:"uppercase",marginBottom:14}}>Gallery</p>
+                  <div style={{aspectRatio:"16/9",borderRadius:12,overflow:"hidden",background:"#0A0A14",marginBottom:12,position:"relative"}}>
+                    <img src={p.imgs[imgIdx]} alt="" style={{width:"100%",height:"100%",objectFit:p.cover?"cover":"contain",display:"block",padding:p.cover?0:24,transition:"opacity 0.3s"}} onError={e=>e.target.style.display="none"}/>
+                  </div>
+                  <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                    {p.imgs.map((img,i)=>(
+                      <div key={i} onClick={()=>setImgIdx(i)} style={{width:72,height:52,borderRadius:8,overflow:"hidden",cursor:"pointer",border:`2px solid ${i===imgIdx?A:"transparent"}`,opacity:i===imgIdx?1:0.5,transition:"all 0.2s",background:"#0A0A14"}}>
+                        <img src={img} alt="" style={{width:"100%",height:"100%",objectFit:p.cover?"cover":"contain",padding:p.cover?0:4}} onError={e=>e.target.style.display="none"}/>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function Projects(){
+      return (
+        <section id="projects" style={{background:BG,padding:"100px 5%"}}>
+          <div style={{maxWidth:1200,margin:"0 auto"}}>
+            <div className="rv" style={{textAlign:"center",marginBottom:64}}>
+              <h2 style={{fontSize:"clamp(28px,4vw,46px)",fontWeight:700,color:"#fff",letterSpacing:"-1px"}}>A small selection of recent projects</h2>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:20}} className="proj-grid">
+              {PROJS.map((p,i)=><ProjectCard key={i} p={p}/>)}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    const EXP=[
+      {r:"Co-Founder & Design Lead",c:"EnduraVolt",d:"Designed an electric off-road buggy with regenerative suspension recovering up to 25% kinetic energy. SolidWorks, FEA, suspension dynamics and electromagnetic simulations.",p:"Mar 2025 – Present",logo:"images/logos/aub.png"},
+      {r:"Undergraduate Researcher",c:"VIPP, AUB",d:"Wildfire suppression UAV research under Dr. Bilal Kaddouh. Reviewed FlamMap/MTT fire propagation models for Lebanese terrain, wind, topography, and fuel conditions.",p:"Jan 2025 – Present",logo:"images/logos/aub.png"},
+      {r:"Metal Fabrication Intern",c:"Attar Steel",d:"Operated industrial shears, press brakes, and angle grinders. Supported hydraulic and power-transmission maintenance under engineer supervision.",p:"May – Aug 2025",logo:"images/logos/attar.png"},
+      {r:"Sales & Closing Associate",c:"Trifid Media",d:"Generated qualified leads through scraping tools and outbound prospecting. Cold-called hundreds of clients and closed 30+ deals in 6 months.",p:"Jun 2025 – Present",logo:"images/logos/trifid.png"},
+      {r:"Project Leader",c:"SBC, SSEA AUB",d:"Led 7-person team to address HVAC chimney-effect issue in AUB ARD building. Designed an Arduino-based automated window control system using temperature sensors.",p:"Sep 2024 – Jan 2025",logo:"images/logos/ssea.png"},
+      {r:"CEO & Founder",c:"Exotic Sneakers",d:"Founded and scaled a premium sneaker brand. Managing six-figure cash flows, a 10-person team, full import logistics, inventory control, and quality oversight since 2022.",p:"Sep 2022 – Present",logo:"images/logos/exotic.png"},
+    ];
+
+    function Experience(){
+      return (
+        <section id="experience" style={{background:BG,padding:"100px 5%",borderTop:`1px solid ${BR}`}}>
+          <div style={{maxWidth:1200,margin:"0 auto"}}>
+            <div className="rv" style={{textAlign:"center",marginBottom:64}}>
+              <h2 style={{fontSize:"clamp(28px,4vw,46px)",fontWeight:700,color:"#fff",letterSpacing:"-1px"}}>My work experience</h2>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              {EXP.map((e,i)=>(
+                <div key={i} className="rv" style={{background:CB,border:`1px solid ${BR}`,borderRadius:16,padding:"20px 24px",transition:"border-color 0.25s,transform 0.25s",display:"flex",gap:18,alignItems:"flex-start"}}
+                  onMouseEnter={el=>{el.currentTarget.style.borderColor=A;el.currentTarget.style.transform="translateX(4px)";}}
+                  onMouseLeave={el=>{el.currentTarget.style.borderColor=BR;el.currentTarget.style.transform="translateX(0)";}}>
+                  {/* Logo */}
+                  <div style={{width:48,height:48,borderRadius:10,flexShrink:0,background:"rgba(255,255,255,0.06)",border:`1px solid ${BR}`,overflow:"hidden",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    <img src={e.logo} alt={e.c} style={{width:"100%",height:"100%",objectFit:"contain",padding:6}}
+                      onError={el=>{el.target.style.display="none";el.target.parentNode.innerHTML=`<span style="color:${A};font-size:18px;font-weight:800">${e.c[0]}</span>`;}}/>
+                  </div>
+                  {/* Text */}
+                  <div style={{flex:1}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,flexWrap:"wrap",marginBottom:4}}>
+                      <div>
+                        <span style={{fontSize:15,fontWeight:600,color:"#fff"}}>{e.r}</span>
+                        <span style={{fontSize:15,color:A,fontWeight:600}}> @ {e.c}</span>
+                      </div>
+                      <span style={{fontSize:12,color:"rgba(255,255,255,0.3)",flexShrink:0}}>{e.p}</span>
+                    </div>
+                    <p style={{fontSize:14,color:"rgba(255,255,255,0.45)",lineHeight:1.65,fontWeight:300}}>{e.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Contact(){
+      return (
+        <section id="contact" style={{background:BG,padding:"100px 5%",position:"relative",overflow:"hidden",borderTop:`1px solid ${BR}`}}>
+          <GridBg o={0.03}/>
+          <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:600,height:600,borderRadius:"50%",background:"radial-gradient(circle,rgba(101,52,178,0.15) 0%,transparent 65%)",pointerEvents:"none"}}/>
+          <div style={{maxWidth:700,margin:"0 auto",textAlign:"center",position:"relative",zIndex:2}}>
+            <div className="rv">
+              <h2 style={{fontSize:"clamp(28px,5vw,52px)",fontWeight:700,color:"#fff",letterSpacing:"-1.5px",lineHeight:1.1,marginBottom:16}}>
+                Let's work together.<br/><span style={{color:A}}>I'm one message away.</span>
+              </h2>
+              <p style={{fontSize:16,color:"rgba(255,255,255,0.45)",lineHeight:1.7,marginBottom:48,fontWeight:300}}>
+                Whether it's an internship, a research collaboration, or a business opportunity — don't wait. Reach out now and let's make it happen.
+              </p>
+              <div style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap",marginBottom:32}}>
+                <a href="mailto:Hti02@mail.aub.edu" style={{display:"flex",alignItems:"center",gap:8,background:"#fff",color:"#000",textDecoration:"none",borderRadius:12,padding:"16px 32px",fontSize:15,fontWeight:600,fontFamily:"Inter,sans-serif",transition:"background 0.2s"}}
+                  onMouseEnter={e=>e.currentTarget.style.background=A} onMouseLeave={e=>e.currentTarget.style.background="#fff"}>
+                  ✉ Send an Email
+                </a>
+                <a href="https://wa.me/96181826512" target="_blank" rel="noreferrer" style={{display:"flex",alignItems:"center",gap:8,background:"#25D366",color:"#fff",textDecoration:"none",borderRadius:12,padding:"16px 32px",fontSize:15,fontWeight:600,fontFamily:"Inter,sans-serif",transition:"opacity 0.2s"}}
+                  onMouseEnter={e=>e.currentTarget.style.opacity="0.85"} onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
+                  WhatsApp
+                </a>
+              </div>
+              <a href="https://linkedin.com/in/husseinitani" target="_blank" rel="noreferrer" style={{fontSize:14,color:"rgba(255,255,255,0.4)",textDecoration:"none",border:`1px solid ${BR}`,borderRadius:10,padding:"10px 24px",fontFamily:"Inter,sans-serif",transition:"all 0.2s"}}
+                onMouseEnter={e=>{e.currentTarget.style.color=A;e.currentTarget.style.borderColor=A;}} onMouseLeave={e=>{e.currentTarget.style.color="rgba(255,255,255,0.4)";e.currentTarget.style.borderColor=BR;}}>
+                LinkedIn ↗
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Footer(){
+      return (
+        <footer style={{background:CB,borderTop:`1px solid ${BR}`,padding:"32px 5%",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16}}>
+          <span style={{fontWeight:800,fontSize:16,color:"#fff",letterSpacing:"-0.5px"}}>Hussein Itani<span style={{color:A}}>.</span></span>
+          <span style={{fontSize:13,color:"rgba(255,255,255,0.2)"}}>Copyright © 2025 Hussein Itani</span>
+          <a href="https://linkedin.com/in/husseinitani" target="_blank" rel="noreferrer" style={{fontSize:13,color:"rgba(255,255,255,0.35)",textDecoration:"none",fontFamily:"Inter,sans-serif"}}
+            onMouseEnter={e=>e.target.style.color=A} onMouseLeave={e=>e.target.style.color="rgba(255,255,255,0.35)"}>LinkedIn ↗</a>
+        </footer>
+      );
+    }
+
+    function App(){
+      useReveal();
+      return <><Navbar/><Hero/><Projects/><Experience/><Contact/><Footer/></>;
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  </script>
+</body>
+</html>
